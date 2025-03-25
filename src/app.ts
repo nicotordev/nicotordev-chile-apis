@@ -7,7 +7,7 @@ import statusMonitor from 'express-status-monitor';
 import rateLimit from 'express-rate-limit';
 import { swaggerOptions } from './config/swagger';
 import { logger } from './config/winston';
-import ApiResponse from './middleware/apiResponse.middleware';
+import ApiResponse from './utils/apiResponse.util';
 import newsRoutes from './routes/news.routes';
 
 class App {
