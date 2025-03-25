@@ -242,7 +242,7 @@ class App {
   private initializeRoutes(): void {
     const allRoutes: RouteConfig[] = [
       {
-        path: '/noticias',
+        path: '/news',
         route: newsRoutes,
         adminOnly: false,
       },
