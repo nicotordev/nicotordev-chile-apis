@@ -73,8 +73,6 @@ model ApiKey {
   key       String   @unique  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  userId String
 }
 
 // Enum for news categories
