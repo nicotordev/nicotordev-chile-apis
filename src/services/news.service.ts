@@ -1,4 +1,6 @@
-async function getNews() {}
+async function getNews() {
+  
+}
 
 export default {
   getNews,
