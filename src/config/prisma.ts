@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client/edge';
 import { withAccelerate } from '@prisma/extension-accelerate';
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const prismaClientSingleton = () => {
   return new PrismaClient().$extends(withAccelerate());
 };
