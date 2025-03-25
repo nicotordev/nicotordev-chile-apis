@@ -6,6 +6,7 @@ declare global {
         NODE_ENV: 'development' | 'production';
         LOG_LEVEL: 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fatal';
         NOTICIAS_STATUS: 'true' | 'false';
+        GOOGLE_GENERATIVE_AI_API_KEY: string;
       }
     }
   }
