@@ -3,7 +3,7 @@ import { Request, Response, NextFunction, RequestHandler } from 'express';
 import { ZodSchema } from 'zod';
 
 interface CustomRequest extends Request {
-  validatedData?: unknown;
+  getBody: <T = unknown>() => T;
 }
 
 export const validateRequestZod = (
@@ -32,7 +32,7 @@ export const validateRequestZod = (
       return;
     }
 
-    (req as CustomRequest).validatedData = result.data;
+    (req as CustomRequest).getBody = <T = unknown>() => result.data as T;
     next();
     return;
   };

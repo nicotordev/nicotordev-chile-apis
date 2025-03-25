@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import prisma from '@/config/prisma';
 import { generateApiKey } from '@/utils/crypto.util';
 

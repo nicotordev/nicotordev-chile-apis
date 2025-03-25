@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
 
 import { logger } from '@/config/winston';
-import apiKeyService from '@/services/apiKey.service';
+import apiKeyService from '@/services/apiKeys.service';
 import ApiResponse from '@/utils/apiResponse.util';
 
 const getApiKeysController: RequestHandler = async (req, res, next) => {

@@ -8,8 +8,9 @@ import swaggerUi from 'swagger-ui-express';
 
 import { swaggerOptions } from './config/swagger';
 import { logger } from './config/winston';
-import apiKeyRoutes from './routes/apiKey.routes';
+import apiKeysRoutes from './routes/apiKeys.routes';
 import newsRoutes from './routes/news.routes';
+import promptsRoutes from './routes/prompts.routes';
 import ApiResponse from './utils/apiResponse.util';
 
 class App {
@@ -89,7 +90,10 @@ class App {
         '/noticias': newsRoutes,
       },
       {
-        '/api-keys': apiKeyRoutes,
+        '/api-keys': apiKeysRoutes,
+      },
+      {
+        '/prompts': promptsRoutes,
       },
     ];
 

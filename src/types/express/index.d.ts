@@ -2,7 +2,7 @@
 declare global {
   namespace Express {
     interface Request {
-      validatedBody?: unknown;
+      getBody: <T = unknown>() => T;
     }
   }
 }
