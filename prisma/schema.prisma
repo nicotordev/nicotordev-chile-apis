@@ -62,15 +62,25 @@ model NewsArticle {
 }
 
 model Prompt {
+  id               String          @id @default(cuid())
+  content          String
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  PromptCategory   PromptCategory? @relation(fields: [promptCategoryId], references: [id])
+  promptCategoryId String?
+}
+
+model PromptCategory {
   id        String   @id @default(cuid())
-  content   String
+  name      String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  prompts   Prompt[]
 }
 
 model ApiKey {
   id        String   @id @default(cuid())
-  key       String   @unique  
+  key       String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
