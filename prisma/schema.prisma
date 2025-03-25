@@ -12,6 +12,16 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ApiKey    ApiKey[]
+}
+
 model NewsArticle {
   id String @id @default(cuid())
 
@@ -58,6 +68,23 @@ model NewsArticle {
   @@index([publishedAt])
   @@index([isProcessed])
   @@index([category])
+}
+
+model Prompt {
+  id        String   @id @default(cuid())
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ApiKey {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
 }
 
 // Enum for news categories
