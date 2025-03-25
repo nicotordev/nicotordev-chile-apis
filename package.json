@@ -30,7 +30,7 @@
   "scripts": {
     "release": "standard-version",
     "start": "node dist/server.js",
-    "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only src/server.ts",
+    "dev": "ts-node-dev -r tsconfig-paths/register -r dotenv/config --respawn --transpile-only src/server.ts",
     "build": "npx prisma generate && tsc",
     "test": "jest",
     "lint": "eslint . --config eslint.config.mjs",

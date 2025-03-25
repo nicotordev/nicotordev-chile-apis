@@ -8,6 +8,7 @@ import swaggerUi from 'swagger-ui-express';
 
 import { swaggerOptions } from './config/swagger';
 import { logger } from './config/winston';
+import { adminAuthenticationMiddleware } from './middleware/admin-authentication.middleware';
 import { authenticationMiddleware } from './middleware/authentication.middleware';
 import apiKeysRoutes from './routes/apiKeys.routes';
 import newsRoutes from './routes/news.routes';
@@ -92,30 +93,30 @@ class App {
       {
         path: '/noticias',
         route: newsRoutes,
-        authenticate: false,
+        adminOnly: false,
       },
       {
         path: '/api-keys',
         route: apiKeysRoutes,
-        authenticate: true,
+        adminOnly: true,
       },
       {
         path: '/prompts',
         route: promptsRoutes,
-        authenticate: true,
+        adminOnly: true,
       },
       {
         path: '/prompt-categories',
         route: promptCategoriesRoutes,
-        authenticate: true,
+        adminOnly: true,
       },
     ];
 
-    allRoutes.forEach(({ path, route, authenticate }) => {
-      if (authenticate) {
-        this.app.use(`/api/v1${path}`, authenticationMiddleware, route);
+    allRoutes.forEach(({ path, route, adminOnly }) => {
+      if (adminOnly) {
+        this.app.use(`/api/v1${path}`, adminAuthenticationMiddleware, route);
       } else {
-        this.app.use(`/api/v1${path}`, route);
+        this.app.use(`/api/v1${path}`, authenticationMiddleware, route);
       }
     });
   }
