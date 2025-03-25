@@ -1,18 +1,43 @@
 {
   "name": "nicotordev-chile-apis",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "Colección de APIs chilenas gratuitas creadas por nicotordev. Acceso libre a datos útiles de Chile.",
+  "author": {
+    "name": "nicotordev",
+    "email": "nicotordev@example.com",
+    "url": "https://github.com/nicotordev"
+  },
   "license": "MIT",
- "scripts": {
-  "start": "node dist/server.js",
-  "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only src/server.ts",
-  "build": "tsc",
-  "test": "jest",
-  "lint": "eslint . --config eslint.config.mjs",
-  "lint:fix": "eslint . --fix --config eslint.config.mjs",
-  "format": "prettier --write \"src/**/*.{ts,tsx}\"",
-  "prepare": "husky install"
-},
+  "keywords": [
+    "apis",
+    "chile",
+    "nicotordev",
+    "datos",
+    "express",
+    "typescript",
+    "rest",
+    "gratuito"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nicotordev/nicotordev-chile-apis.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nicotordev/nicotordev-chile-apis/issues"
+  },
+  "homepage": "https://github.com/nicotordev/nicotordev-chile-apis#readme",
+  "main": "index.js",
+  "scripts": {
+    "release": "standard-version",
+    "start": "node dist/server.js",
+    "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only src/server.ts",
+    "build": "tsc",
+    "test": "jest",
+    "lint": "eslint . --config eslint.config.mjs",
+    "lint:fix": "eslint . --fix --config eslint.config.mjs",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "prepare": "husky install"
+  },
   "dependencies": {
     "@google/generative-ai": "^0.24.0",
     "@prisma/client": "^6.5.0",
@@ -57,6 +82,7 @@
     "lint-staged": "^15.5.0",
     "prettier": "^3.5.3",
     "prisma": "^6.5.0",
+    "standard-version": "^9.5.0",
     "ts-jest": "^29.3.0",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.8.2",

@@ -1,0 +1,31 @@
+# .github/workflows/release.yml
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Run release script
+        run: yarn release
+
+      - name: Push changes and tags
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git push --follow-tags origin main
