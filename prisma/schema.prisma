@@ -13,15 +13,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  ApiKey    ApiKey[]
-}
-
 model NewsArticle {
   id String @id @default(cuid())
 
@@ -79,11 +70,10 @@ model Prompt {
 
 model ApiKey {
   id        String   @id @default(cuid())
-  key       String   @unique
+  key       String   @unique  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  user   User   @relation(fields: [userId], references: [id])
   userId String
 }
 
