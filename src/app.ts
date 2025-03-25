@@ -8,7 +8,7 @@ import swaggerUi from 'swagger-ui-express';
 
 import { swaggerOptions } from './config/swagger';
 import { logger } from './config/winston';
-import adminApiKeyRoutes from './routes/admin/apiKey.routes';
+import apiKeyRoutes from './routes/apiKey.routes';
 import newsRoutes from './routes/news.routes';
 import ApiResponse from './utils/apiResponse.util';
 
@@ -88,22 +88,14 @@ class App {
       {
         '/noticias': newsRoutes,
       },
-    ];
-    const adminRoutes: Record<string, express.Router>[] = [
       {
-        '/api-keys': adminApiKeyRoutes,
+        '/api-keys': apiKeyRoutes,
       },
     ];
 
     allRoutes.forEach((routes) => {
       Object.keys(routes).forEach((route) => {
         this.app.use(`/api/v1${route}`, routes[`${route}`]);
-      });
-    });
-
-    adminRoutes.forEach((routes) => {
-      Object.keys(routes).forEach((route) => {
-        this.app.use(`/api/v1/admin${route}`, routes[`${route}`]);
       });
     });
   }

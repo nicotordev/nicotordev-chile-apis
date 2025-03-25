@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import apiKeyController from '@/controllers/admin/apiKey.controller';
+import apiKeyController from '@/controllers/apiKey.controller';
 import { validateRequestZod } from '@/middleware/validateRequestZod.middleware';
 import { apiKeyIdParamSchema } from '@/schemas/apiKey.schema';
 
