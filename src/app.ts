@@ -10,6 +10,7 @@ import { swaggerOptions } from './config/swagger';
 import { logger } from './config/winston';
 import apiKeysRoutes from './routes/apiKeys.routes';
 import newsRoutes from './routes/news.routes';
+import promptCategoriesRoutes from './routes/promptCategories.routes';
 import promptsRoutes from './routes/prompts.routes';
 import ApiResponse from './utils/apiResponse.util';
 
@@ -94,6 +95,9 @@ class App {
       },
       {
         '/prompts': promptsRoutes,
+      },
+      {
+        '/prompt-categories': promptCategoriesRoutes,
       },
     ];
 
