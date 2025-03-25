@@ -8,6 +8,9 @@ declare global {
       NOTICIAS_STATUS: 'true' | 'false';
       GOOGLE_GENERATIVE_AI_API_KEY: string;
       MASTER_KEY: string;
+      BRD_PROXY_HOST: string;
+      BRD_PROXY_PORT: string;
+      BRD_PROXY_AUTH: string;
     }
   }
 }
