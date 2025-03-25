@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import swaggerUi from 'swagger-ui-express';
@@ -7,6 +7,7 @@ import statusMonitor from 'express-status-monitor';
 
 import { swaggerOptions } from './config/swagger';
 import { logger } from './config/winston';
+import ApiResponse from './middleware/apiResponse.middleware';
 
 class App {
   public app: express.Application;
@@ -16,6 +17,9 @@ class App {
     this.initializeMiddlewares();
     this.initializeSwagger();
     this.initializeHealthCheck();
+    this.initializeRoutes();
+    this.initialize404();
+    this.initializeErrorHandling();
   }
 
   private initializeMiddlewares() {
@@ -30,9 +34,27 @@ class App {
     this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
   }
 
+  private initializeErrorHandling() {
+    this.app.use((err: unknown, req: Request, res: Response, next: NextFunction) => {
+      logger.error(err);
+      ApiResponse.internalServerError(res, 'Internal server error');
+    });
+  }
+
+  private initialize404() {
+    this.app.use((req: Request, res: Response) => {
+      ApiResponse.notFound(res, 'Resource not found');
+    });
+  }
+
+  private initializeRoutes() {
+    
+  }
+
+
   private initializeHealthCheck() {
     this.app.use(statusMonitor());
-    
+
     this.app.get('/health', (req, res) => {
       res.status(200).json({
         status: 'healthy',
