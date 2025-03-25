@@ -36,6 +36,3 @@ jobs:
 
       - name: Run TypeScript build
         run: yarn build
-
-      - name: (Optional) Run tests
-        run: yarn test

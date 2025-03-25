@@ -20,6 +20,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -29,11 +31,14 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
+      - name: Configure Git identity
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+
       - name: Run release script
         run: yarn release
 
       - name: Push changes and tags
         run: |
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
           git push --follow-tags origin main
