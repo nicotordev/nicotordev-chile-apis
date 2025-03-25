@@ -12,9 +12,74 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+model NewsArticle {
+  id String @id @default(cuid())
 
-model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  // Unique identifiers
+  externalId String? @unique
+  url        String  @unique
+
+  // Core content
+  title   String
+  snippet String @db.Text
+
+  // Scraping metadata
+  sourceDomain String
+  sourceUrl    String
+
+  // Content details
+  author      String?
+  publishedAt DateTime
+  scrapedAt   DateTime @default(now())
+
+  // Categorization
+  category NewsCategory?
+  tags     String[]
+
+  // Content analysis
+  language String  @default("en")
+  country  String?
+
+  // Media references
+  thumbnailUrl String?
+
+  // Tracking and deduplication
+  isProcessed Boolean @default(false)
+  isDuplicate Boolean @default(false)
+
+  // Scraping provenance
+  scraperName String?
+
+  // Optional extra metadata
+  extractionMethod ExtractionMethod?
+
+  // Indexes for performance
+  @@index([sourceDomain])
+  @@index([publishedAt])
+  @@index([isProcessed])
+  @@index([category])
+}
+
+// Enum for news categories
+enum NewsCategory {
+  POLITICS
+  TECHNOLOGY
+  BUSINESS
+  SPORTS
+  ENTERTAINMENT
+  SCIENCE
+  HEALTH
+  WORLD
+  LOCAL
+  OPINION
+  OTHER
+}
+
+// Enum to track extraction method
+enum ExtractionMethod {
+  RSS
+  SITEMAP
+  DIRECT_SCRAPE
+  API
+  OTHER
 }
