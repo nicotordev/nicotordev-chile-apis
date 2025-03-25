@@ -1,4 +1,4 @@
-import ApiResponse from "@/middleware/apiResponse.middleware";
+import ApiResponse from "@/utils/apiResponse.util";
 import { RequestHandler } from "express";
 
 const newsStatusController: RequestHandler = (req, res, next) => {
