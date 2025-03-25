@@ -85,6 +85,13 @@ model ApiKey {
   updatedAt DateTime @updatedAt
 }
 
+model ScrapingTarget {
+  id        String   @id @default(cuid())
+  url       String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 // Enum for news categories
 enum NewsCategory {
   POLITICS
