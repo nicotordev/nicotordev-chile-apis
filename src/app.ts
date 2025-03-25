@@ -9,6 +9,7 @@ import swaggerUi from 'swagger-ui-express';
 
 import { swaggerOptions } from './config/swagger';
 import { logger } from './config/winston';
+import { ApiError } from './errors/api.errors';
 import { adminAuthenticationMiddleware } from './middleware/admin-authentication.middleware';
 import { authenticationMiddleware } from './middleware/authentication.middleware';
 import apiKeysRoutes from './routes/apiKeys.routes';
@@ -79,6 +80,27 @@ class App {
   private initializeErrorHandling(): void {
     this.app.use((err: unknown, req: Request, res: Response, next: express.NextFunction) => {
       logger.error(err);
+
+      if (err instanceof ApiError) {
+        switch (err.statusCode) {
+          case 400:
+            return ApiResponse.badRequest(res, err.message);
+          case 401:
+            return ApiResponse.unauthorized(res, err.message);
+          case 403:
+            return ApiResponse.forbidden(res, err.message);
+          case 404:
+            return ApiResponse.notFound(res, err.message);
+          case 409:
+            return ApiResponse.conflict(res, err.message);
+          case 429:
+            return ApiResponse.tooManyRequests(res, err.message);
+          case 500:
+            return ApiResponse.internalServerError(res, err.message);
+          default:
+            return ApiResponse.internalServerError(res, 'Error interno del servidor');
+        }
+      }
 
       if (err instanceof Error && 'code' in err) {
         switch (err.code) {
