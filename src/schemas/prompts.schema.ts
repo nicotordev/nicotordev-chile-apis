@@ -2,7 +2,7 @@
 import { z } from 'zod';
 
 export const promptIdParamSchema = z.object({
-  id: z.string().uuid({ message: 'El id debe ser un UUID válido.' }),
+  id: z.string().min(1, { message: 'El id no puede estar vacío.' }),
 });
 
 export const promptCreateSchema = z.object({
@@ -12,7 +12,7 @@ export const promptCreateSchema = z.object({
     .refine((value: string) => /^[A-Za-z0-9+/=]*$/.test(value), {
       message: 'El contenido debe ser un base64 válido.',
     }),
-  promptCategoryId: z.string().uuid({ message: 'El id debe ser un UUID válido.' }),
+  promptCategoryId: z.string().min(1, { message: 'El id de la categoría no puede estar vacío.' }),
 });
 
 export const promptUpdateSchema = z.object({
@@ -23,5 +23,8 @@ export const promptUpdateSchema = z.object({
       message: 'El contenido debe ser un base64 válido.',
     })
     .optional(),
-  promptCategoryId: z.string().uuid({ message: 'El id debe ser un UUID válido.' }).optional(),
+  promptCategoryId: z
+    .string()
+    .min(1, { message: 'El id de la categoría no puede estar vacío.' })
+    .optional(),
 });

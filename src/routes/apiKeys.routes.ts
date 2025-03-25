@@ -9,19 +9,19 @@ const router = Router();
 router.get('/', apiKeyController.getApiKeysController);
 
 // POST: no requiere input porque la API key se genera automáticamente
-router.post('/', apiKeyController.getApiKeysController);
+router.post('/', apiKeyController.createApiKeyController);
 
 // PATCH y DELETE requieren ID en params
 router.patch(
   '/:id',
   validateRequestZod(apiKeyIdParamSchema, 'params'),
-  apiKeyController.getApiKeysController
+  apiKeyController.reGenerateApiKeyController
 );
 
 router.delete(
   '/:id',
   validateRequestZod(apiKeyIdParamSchema, 'params'),
-  apiKeyController.getApiKeysController
+  apiKeyController.deleteApiKeyController
 );
 
 // GET con :id también requiere validación

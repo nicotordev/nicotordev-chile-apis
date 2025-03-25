@@ -19,7 +19,7 @@ const createApiKeyController: RequestHandler = async (req, res, next) => {
   try {
     const apiKey = await apiKeyService.createApiKeyService();
     void ApiResponse.created(res, apiKey);
-    return;
+    return ApiResponse.created(res, apiKey);
   } catch (err) {
     logger.error(err);
     next(err);
