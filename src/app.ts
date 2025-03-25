@@ -9,7 +9,7 @@ import { swaggerOptions } from './config/swagger';
 import { logger } from './config/winston';
 import ApiResponse from './middleware/apiResponse.middleware';
 
-import nocitiasRoutes from './routes/noticias.routes';
+import newsRoutes from './routes/news.routes';
 
 class App {
   public app: express.Application;
@@ -52,7 +52,7 @@ class App {
 
   private initializeRoutes() {
     const allRoutes: Array<Record<string, express.Router>> = [{
-      '/noticias': nocitiasRoutes
+      '/noticias': newsRoutes
     }];
     allRoutes.forEach((routes) => {
       Object.keys(routes).forEach((route) => {
