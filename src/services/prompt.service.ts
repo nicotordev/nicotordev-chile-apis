@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import prisma from '@/config/prisma';
+import { ApiError } from '@/errors/api.errors';
 import { decodeBase64 } from '@/utils/crypto.util';
 
 async function getPromptsService() {
@@ -7,6 +7,16 @@ async function getPromptsService() {
 }
 
 async function createPromptService(contentBase64: string, promptCategoryId: string) {
+  const promptCategoryExist = await prisma.promptCategory.findUnique({
+    where: {
+      id: promptCategoryId,
+    },
+  });
+
+  if (!promptCategoryExist) {
+    throw ApiError.notFound('La categoría de prompt no existe.');
+  }
+
   const content = decodeBase64(contentBase64);
 
   return await prisma.prompt.create({
@@ -34,6 +44,18 @@ async function updatePromptService(id: string, contentBase64?: string, promptCat
     return;
   }
 
+  if (promptCategoryQuery) {
+    const promptCategoryExist = await prisma.promptCategory.findUnique({
+      where: {
+        id: promptCategoryId,
+      },
+    });
+
+    if (!promptCategoryExist) {
+      throw ApiError.notFound('La categoría de prompt no existe.');
+    }
+  }
+
   return await prisma.prompt.update({
     where: {
       id,
@@ -46,6 +68,16 @@ async function updatePromptService(id: string, contentBase64?: string, promptCat
 }
 
 async function deletePromptService(id: string) {
+  const promptExist = await prisma.prompt.findUnique({
+    where: {
+      id,
+    },
+  });
+
+  if (!promptExist) {
+    throw ApiError.notFound('El prompt no existe.');
+  }
+
   await prisma.prompt.delete({
     where: {
       id,
@@ -54,6 +86,16 @@ async function deletePromptService(id: string) {
 }
 
 async function getPromptService(id: string) {
+  const promptExist = await prisma.prompt.findUnique({
+    where: {
+      id,
+    },
+  });
+
+  if (!promptExist) {
+    throw ApiError.notFound('El prompt no existe.');
+  }
+
   return await prisma.prompt.findUnique({
     where: {
       id,

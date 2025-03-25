@@ -28,7 +28,10 @@ export const validateRequestZod = (
       return ApiResponse.badRequest(
         res,
         'Invalid request',
-        result.error.errors.map((err) => err.message)
+        result.error.errors.map((err) => ({
+          field: err.path.join('.'),
+          message: err.message,
+        }))
       );
     }
 

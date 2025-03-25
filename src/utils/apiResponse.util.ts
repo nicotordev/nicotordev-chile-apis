@@ -51,7 +51,11 @@ export default class ApiResponse {
     }) as unknown as void;
   }
 
-  static badRequest(res: Response, message = 'Bad Request', errors: string[] = []): void {
+  static badRequest(
+    res: Response,
+    message = 'Bad Request',
+    errors: { field: string; message: string }[] = []
+  ): void {
     return res.status(ApiHttpStatus.BAD_REQUEST).json({
       data: errors,
       meta: {
