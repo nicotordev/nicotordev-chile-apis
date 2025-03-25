@@ -7,6 +7,7 @@ declare global {
         LOG_LEVEL: 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fatal';
         NOTICIAS_STATUS: 'true' | 'false';
         GOOGLE_GENERATIVE_AI_API_KEY: string;
+        MASTER_KEY: string;
       }
     }
   }
