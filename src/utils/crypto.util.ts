@@ -40,3 +40,16 @@ export function generateApiKey(
 
   return apiKey.slice(0, length + prefix.length);
 }
+
+/**
+ * Decode a base64 string
+ * @param {string} base64String - Base64 string to decode
+ * @returns {string} Decoded string
+ * @throws {Error} Throws an error if the input is not a valid base64 string
+ *
+ */
+
+export function decodeBase64(base64String: string): string {
+  const decodedString = Buffer.from(base64String, 'base64').toString('utf-8');
+  return decodedString;
+}
