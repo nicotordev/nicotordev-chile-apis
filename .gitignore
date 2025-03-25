@@ -1,3 +1,4 @@
 node_modules
 .env
 logs
+migration_lock.toml
