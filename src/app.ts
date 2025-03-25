@@ -9,6 +9,8 @@ import { swaggerOptions } from './config/swagger';
 import { logger } from './config/winston';
 import ApiResponse from './middleware/apiResponse.middleware';
 
+import nocitiasRoutes from './routes/noticias.routes';
+
 class App {
   public app: express.Application;
 
@@ -47,8 +49,16 @@ class App {
     });
   }
 
+
   private initializeRoutes() {
-    
+    const allRoutes: Array<Record<string, express.Router>> = [{
+      '/noticias': nocitiasRoutes
+    }];
+    allRoutes.forEach((routes) => {
+      Object.keys(routes).forEach((route) => {
+        this.app.use(`/api/v1${route}`, routes[route]);
+      });
+    });
   }
 
 

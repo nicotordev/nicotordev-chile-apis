@@ -8,3 +8,6 @@ router.get('/status', (req: Request, res: Response, next: NextFunction) => {
         { status: process.env.NOTICIAS_STATUS === "true" }
     );
 });
+
+
+export default router;
