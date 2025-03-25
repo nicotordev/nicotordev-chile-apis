@@ -8,10 +8,12 @@ import swaggerUi from 'swagger-ui-express';
 
 import { swaggerOptions } from './config/swagger';
 import { logger } from './config/winston';
+import { authenticationMiddleware } from './middleware/authentication.middleware';
 import apiKeysRoutes from './routes/apiKeys.routes';
 import newsRoutes from './routes/news.routes';
 import promptCategoriesRoutes from './routes/promptCategories.routes';
 import promptsRoutes from './routes/prompts.routes';
+import { RouteConfig } from './types/app';
 import ApiResponse from './utils/apiResponse.util';
 
 class App {
@@ -86,25 +88,35 @@ class App {
   }
 
   private initializeRoutes(): void {
-    const allRoutes: Record<string, express.Router>[] = [
+    const allRoutes: RouteConfig[] = [
       {
-        '/noticias': newsRoutes,
+        path: '/noticias',
+        route: newsRoutes,
+        authenticate: false,
       },
       {
-        '/api-keys': apiKeysRoutes,
+        path: '/api-keys',
+        route: apiKeysRoutes,
+        authenticate: true,
       },
       {
-        '/prompts': promptsRoutes,
+        path: '/prompts',
+        route: promptsRoutes,
+        authenticate: true,
       },
       {
-        '/prompt-categories': promptCategoriesRoutes,
+        path: '/prompt-categories',
+        route: promptCategoriesRoutes,
+        authenticate: true,
       },
     ];
 
-    allRoutes.forEach((routes) => {
-      Object.keys(routes).forEach((route) => {
-        this.app.use(`/api/v1${route}`, routes[`${route}`]);
-      });
+    allRoutes.forEach(({ path, route, authenticate }) => {
+      if (authenticate) {
+        this.app.use(`/api/v1${path}`, authenticationMiddleware, route);
+      } else {
+        this.app.use(`/api/v1${path}`, route);
+      }
     });
   }
 
