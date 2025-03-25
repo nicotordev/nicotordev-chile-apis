@@ -31,7 +31,7 @@
     "release": "standard-version",
     "start": "node dist/server.js",
     "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only src/server.ts",
-    "build": "tsc",
+    "build": "npx prisma generate && tsc",
     "test": "jest",
     "lint": "eslint . --config eslint.config.mjs",
     "lint:fix": "eslint . --fix --config eslint.config.mjs",
