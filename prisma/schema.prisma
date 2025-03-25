@@ -71,11 +71,12 @@ model Prompt {
 }
 
 model PromptCategory {
-  id        String   @id @default(cuid())
-  name      String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  prompts   Prompt[]
+  id              String           @id @default(cuid())
+  name            String           @unique
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  prompts         Prompt[]
+  scrapingTargets ScrapingTarget[]
 }
 
 model ApiKey {
@@ -86,10 +87,12 @@ model ApiKey {
 }
 
 model ScrapingTarget {
-  id        String   @id @default(cuid())
-  url       String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id               String          @id @default(cuid())
+  url              String          @unique
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  PromptCategory   PromptCategory? @relation(fields: [promptCategoryId], references: [id])
+  promptCategoryId String?
 }
 
 // Enum for news categories
