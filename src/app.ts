@@ -16,6 +16,7 @@ import apiKeysRoutes from './routes/apiKeys.routes';
 import newsRoutes from './routes/news.routes';
 import promptCategoriesRoutes from './routes/promptCategories.routes';
 import promptsRoutes from './routes/prompts.routes';
+import scrapingTargetsRoutes from './routes/scrapingTargets.routes';
 import { RouteConfig } from './types/app';
 import ApiResponse from './utils/apiResponse.util';
 
@@ -259,6 +260,11 @@ class App {
       {
         path: '/prompt-categories',
         route: promptCategoriesRoutes,
+        adminOnly: true,
+      },
+      {
+        path: '/scraping-targets',
+        route: scrapingTargetsRoutes,
         adminOnly: true,
       },
     ];

@@ -8,7 +8,15 @@ export const authenticationMiddleware = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
+  const masterApiKey = req.header('x-master-key');
+
+  if (process.env.MASTER_KEY && masterApiKey === process.env.MASTER_KEY) {
+    next();
+    return;
+  }
+
   const apiKey = req.header('x-api-key');
+
   if (!apiKey) {
     return ApiResponse.unauthorized(res, 'API key required');
   }
