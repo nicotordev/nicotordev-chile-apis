@@ -1,9 +1,11 @@
-import aiConstants from "@/constants/ai.constants";
 import {
+  GenerateContentResult,
   GenerativeModel,
   GoogleGenerativeAI,
   StartChatParams,
-} from "@google/generative-ai";
+} from '@google/generative-ai';
+
+import aiConstants from '@/constants/ai.constants';
 
 class GenerativeAI {
   private apiKey: string;
@@ -18,7 +20,10 @@ class GenerativeAI {
     });
   }
 
-  public async sendPrompt(prompt: string, startChatParams?: StartChatParams) {
+  public async sendPrompt(
+    prompt: string,
+    startChatParams?: StartChatParams
+  ): Promise<GenerateContentResult> {
     const chat = this.aiClient.startChat(startChatParams);
 
     return await chat.sendMessage(prompt);

@@ -8,17 +8,15 @@ import crypto from 'crypto';
  * @param {string} [options.prefix=''] - Optional prefix for the API key
  * @returns {string} Generated API key
  */
-export function generateApiKey(options: {
-  length?: number, 
-  includeSpecialChars?: boolean, 
-  prefix?: string
-} = {}): string {
+export function generateApiKey(
+  options: {
+    length?: number;
+    includeSpecialChars?: boolean;
+    prefix?: string;
+  } = {}
+): string {
   // Default options
-  const {
-    length = 32, 
-    includeSpecialChars = true,
-    prefix = ''
-  } = options;
+  const { length = 32, includeSpecialChars = true, prefix = '' } = options;
 
   // Define character sets
   const lowercaseChars = 'abcdefghijklmnopqrstuvwxyz';

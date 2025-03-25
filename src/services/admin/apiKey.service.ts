@@ -1,5 +1,6 @@
-import prisma from "@/config/prisma";
-import { generateApiKey } from "@/utils/crypto.util";
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+import prisma from '@/config/prisma';
+import { generateApiKey } from '@/utils/crypto.util';
 
 async function getApiKeysService() {
   return await prisma.apiKey.findMany();
@@ -32,9 +33,18 @@ async function deleteApiKeyService(id: string) {
   });
 }
 
+async function getApiKeyService(id: string) {
+  return await prisma.apiKey.findUnique({
+    where: {
+      id,
+    },
+  });
+}
+
 export default {
   getApiKeysService,
   createApiKeyService,
   reGenerateApiKeyService,
   deleteApiKeyService,
+  getApiKeyService,
 };

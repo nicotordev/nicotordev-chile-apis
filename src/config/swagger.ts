@@ -6,13 +6,13 @@ export const swaggerOptions: Options = {
     info: {
       title: 'Express TypeScript API',
       version: '1.0.0',
-      description: 'API documentation for Express TypeScript project'
+      description: 'API documentation for Express TypeScript project',
     },
     servers: [
       {
-        url: 'http://localhost:3000/api/v1'
-      }
-    ]
+        url: 'http://localhost:3000/api/v1',
+      },
+    ],
   },
-  apis: ['./src/routes/*.ts', './src/controllers/*.ts']
+  apis: ['./src/routes/*.ts', './src/controllers/*.ts'],
 };

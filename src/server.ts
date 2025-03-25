@@ -1,5 +1,6 @@
-import App from './app';
 import dotenv from 'dotenv';
+
+import App from './app';
 
 // Load environment variables
 dotenv.config();

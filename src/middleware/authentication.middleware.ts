@@ -1,15 +1,16 @@
-import prisma from "@/config/prisma";
-import ApiResponse from "@/utils/apiResponse.util";
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response } from 'express';
+
+import prisma from '@/config/prisma';
+import ApiResponse from '@/utils/apiResponse.util';
 
 export const authenticationMiddleware = async (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
-  const apiKey = req.header("x-api-key");
+): Promise<void> => {
+  const apiKey = req.header('x-api-key');
   if (!apiKey) {
-    return ApiResponse.unauthorized(res, "API key required");
+    return ApiResponse.unauthorized(res, 'API key required');
   }
 
   // Verify API key
@@ -20,7 +21,8 @@ export const authenticationMiddleware = async (
   });
 
   if (!dbApiKey) {
-    return ApiResponse.unauthorized(res, "Invalid API key");
+    void ApiResponse.unauthorized(res, 'Invalid API key');
+    return;
   }
 
   next();

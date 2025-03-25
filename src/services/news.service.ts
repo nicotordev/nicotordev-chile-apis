@@ -1,7 +1,7 @@
-async function getNews() {
-const 
+function getNewsService(): never[] {
+  return [];
 }
 
 export default {
-  getNews,
+  getNewsService,
 };
