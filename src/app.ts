@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import cors from 'cors';
-import express, { Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import rateLimit from 'express-rate-limit';
 import statusMonitor from 'express-status-monitor';
 import helmet from 'helmet';
@@ -76,9 +77,137 @@ class App {
   }
 
   private initializeErrorHandling(): void {
-    this.app.use((err: unknown, req: Request, res: Response) => {
+    this.app.use((err: unknown, req: Request, res: Response, next: express.NextFunction) => {
       logger.error(err);
-      return ApiResponse.internalServerError(res, 'Internal server error');
+
+      if (err instanceof Error && 'code' in err) {
+        switch (err.code) {
+          case 'P2000':
+            return ApiResponse.badRequest(
+              res,
+              'El valor proporcionado para la columna es demasiado largo.'
+            );
+          case 'P2001':
+            return ApiResponse.notFound(
+              res,
+              'El registro buscado en la condición WHERE no existe.'
+            );
+          case 'P2002':
+            return ApiResponse.conflict(res, 'Violación de restricción única.');
+          case 'P2003':
+            return ApiResponse.conflict(res, 'Violación de restricción de clave foránea.');
+          case 'P2004':
+            return ApiResponse.badRequest(res, 'Falló una restricción en la base de datos.');
+          case 'P2005':
+            return ApiResponse.badRequest(
+              res,
+              'El valor almacenado en la base de datos para el campo es inválido para el tipo de campo.'
+            );
+          case 'P2006':
+            return ApiResponse.badRequest(res, 'El valor proporcionado para el campo es inválido.');
+          case 'P2007':
+            return ApiResponse.badRequest(res, 'Error de validación de datos.');
+          case 'P2008':
+            return ApiResponse.internalServerError(res, 'Error al analizar la consulta.');
+          case 'P2009':
+            return ApiResponse.internalServerError(res, 'Error al validar la consulta.');
+          case 'P2010':
+            return ApiResponse.internalServerError(res, 'La consulta en bruto falló.');
+          case 'P2011':
+            return ApiResponse.badRequest(res, 'Violación de restricción de valor nulo.');
+          case 'P2012':
+            return ApiResponse.badRequest(res, 'Falta un valor requerido.');
+          case 'P2013':
+            return ApiResponse.badRequest(res, 'Falta un argumento requerido.');
+          case 'P2014':
+            return ApiResponse.badRequest(
+              res,
+              'El cambio que intentas realizar violaría la relación requerida.'
+            );
+          case 'P2015':
+            return ApiResponse.notFound(res, 'No se pudo encontrar un registro relacionado.');
+          case 'P2016':
+            return ApiResponse.badRequest(res, 'Error de interpretación de la consulta.');
+          case 'P2017':
+            return ApiResponse.badRequest(
+              res,
+              'Los registros para la relación entre los modelos padre e hijo no están conectados.'
+            );
+          case 'P2018':
+            return ApiResponse.badRequest(res, 'La referencia de conexión no es válida.');
+          case 'P2019':
+            return ApiResponse.badRequest(res, 'Error de interpretación de la entrada.');
+          case 'P2020':
+            return ApiResponse.notFound(res, 'Valor de clave fuera de rango.');
+          case 'P2021':
+            return ApiResponse.internalServerError(
+              res,
+              'La tabla actual no existe en la base de datos.'
+            );
+          case 'P2022':
+            return ApiResponse.internalServerError(
+              res,
+              'La columna actual no existe en la base de datos.'
+            );
+          case 'P2023':
+            return ApiResponse.internalServerError(
+              res,
+              'La entrada para la consulta no es válida.'
+            );
+          case 'P2024':
+            return ApiResponse.internalServerError(
+              res,
+              'La consulta se agotó antes de completarse.'
+            );
+          case 'P2025':
+            return ApiResponse.notFound(res, 'El registro buscado no existe.');
+          case 'P2026':
+            return ApiResponse.internalServerError(
+              res,
+              'No se pudo iniciar una transacción en el servidor.'
+            );
+          case 'P2027':
+            return ApiResponse.internalServerError(
+              res,
+              'El motor de la base de datos no admite la característica solicitada.'
+            );
+          case 'P2028':
+            return ApiResponse.internalServerError(res, 'Falló la transacción en el servidor.');
+          case 'P2029':
+            return ApiResponse.internalServerError(res, 'Error de protocolo de red.');
+          case 'P2030':
+            return ApiResponse.internalServerError(res, 'Error de base de datos desconocido.');
+          case 'P2031':
+            return ApiResponse.internalServerError(
+              res,
+              'No se pudo encontrar una base de datos válida en la cadena de conexión.'
+            );
+          case 'P2032':
+            return ApiResponse.internalServerError(res, 'Error al convertir el campo.');
+          case 'P2033':
+            return ApiResponse.internalServerError(
+              res,
+              'No se pudo encontrar el archivo de base de datos.'
+            );
+          case 'P2034':
+            return ApiResponse.internalServerError(
+              res,
+              'No se pudo encontrar una base de datos válida en la cadena de conexión.'
+            );
+          case 'P2035':
+            return ApiResponse.internalServerError(
+              res,
+              'No se pudo encontrar una base de datos válida en la cadena de conexión.'
+            );
+          default:
+            return ApiResponse.internalServerError(
+              res,
+              'Ocurrió un error inesperado con la base de datos.'
+            );
+        }
+      }
+
+      return ApiResponse.internalServerError(res, 'Error interno del servidor');
     });
   }
 

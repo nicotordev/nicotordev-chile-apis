@@ -106,6 +106,13 @@ export default class ApiResponse {
     }) as unknown as void;
   }
 
+  static conflict(res: Response, message = 'Conflict'): void {
+    return res.status(ApiHttpStatus.CONFLICT).json({
+      data: null,
+      meta: { message, status: ApiHttpStatus.CONFLICT, ok: false },
+    }) as unknown as void;
+  }
+
   static internalServerError(
     res: Response,
     message = 'Internal Server Error',

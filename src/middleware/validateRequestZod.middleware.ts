@@ -2,6 +2,8 @@
 import { Request, Response, NextFunction, RequestHandler } from 'express';
 import { ZodSchema } from 'zod';
 
+import ApiResponse from '@/utils/apiResponse.util';
+
 interface CustomRequest extends Request {
   getBody: <T = unknown>() => T;
 }
@@ -23,13 +25,11 @@ export const validateRequestZod = (
     const result = schema.safeParse(data);
 
     if (!result.success) {
-      res.status(400).json(
-        result.error.errors.map((err) => ({
-          path: err.path.join('.'),
-          message: err.message,
-        }))
+      return ApiResponse.badRequest(
+        res,
+        'Invalid request',
+        result.error.errors.map((err) => err.message)
       );
-      return;
     }
 
     (req as CustomRequest).getBody = <T = unknown>() => result.data as T;
