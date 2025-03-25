@@ -10,10 +10,9 @@ import ApiResponse from '@/utils/apiResponse.util';
 const getPromptCategoriesController: RequestHandler = async (req, res, next) => {
   try {
     const promptCategories = await promptCategoryService.getPromptCategoriesService();
-    ApiResponse.success(res, promptCategories);
-    return;
+    return ApiResponse.success(res, promptCategories);
   } catch (err: unknown) {
-    next(err);
+    return next(err);
   }
 };
 
@@ -21,10 +20,9 @@ const createPromptCategoryController: RequestHandler = async (req, res, next) =>
   try {
     const { name } = req.getBody<CreatePromptCategoryPayload>();
     const promptCategory = await promptCategoryService.createPromptCategoryService(name);
-    ApiResponse.created(res, promptCategory);
-    return;
+    return ApiResponse.created(res, promptCategory);
   } catch (err: unknown) {
-    next(err);
+    return next(err);
   }
 };
 
@@ -33,10 +31,9 @@ const updatePromptCategoryController: RequestHandler = async (req, res, next) =>
     const { id } = req.params;
     const { name } = req.getBody<UpdatePromptCategoryPayload>();
     const promptCategory = await promptCategoryService.updatePromptCategoryService(id, name);
-    ApiResponse.accepted(res, promptCategory);
-    return;
+    return ApiResponse.accepted(res, promptCategory);
   } catch (err: unknown) {
-    next(err);
+    return next(err);
   }
 };
 
@@ -44,10 +41,9 @@ const deletePromptCategoryController: RequestHandler = async (req, res, next) =>
   try {
     const { id } = req.params;
     await promptCategoryService.deletePromptCategoryService(id);
-    ApiResponse.noContent(res);
-    return;
+    return ApiResponse.noContent(res);
   } catch (err: unknown) {
-    next(err);
+    return next(err);
   }
 };
 
@@ -55,10 +51,9 @@ const getPromptCategoryByIdController: RequestHandler = async (req, res, next) =
   try {
     const { id } = req.params;
     const promptCategory = await promptCategoryService.getPromptCategoryService(id);
-    ApiResponse.success(res, promptCategory);
-    return;
+    return ApiResponse.success(res, promptCategory);
   } catch (err: unknown) {
-    next(err);
+    return next(err);
   }
 };
 

@@ -7,10 +7,9 @@ import ApiResponse from '@/utils/apiResponse.util';
 const getPromptsController: RequestHandler = async (req, res, next) => {
   try {
     const prompts = await promptService.getPromptsService();
-    ApiResponse.success(res, prompts);
-    return;
+    return ApiResponse.success(res, prompts);
   } catch (err: unknown) {
-    next(err);
+    return next(err);
   }
 };
 
@@ -18,10 +17,9 @@ const createPromptController: RequestHandler = async (req, res, next) => {
   try {
     const { contentBase64, promptCategoryId } = req.getBody<CreatePromptPayload>();
     const prompt = await promptService.createPromptService(contentBase64, promptCategoryId);
-    ApiResponse.created(res, prompt);
-    return;
+    return ApiResponse.created(res, prompt);
   } catch (err: unknown) {
-    next(err);
+    return next(err);
   }
 };
 
@@ -30,10 +28,9 @@ const updatePromptController: RequestHandler = async (req, res, next) => {
     const { id } = req.params;
     const { contentBase64, promptCategoryId } = req.getBody<UpdatePromptPayload>();
     const prompt = await promptService.updatePromptService(id, contentBase64, promptCategoryId);
-    ApiResponse.accepted(res, prompt);
-    return;
+    return ApiResponse.accepted(res, prompt);
   } catch (err: unknown) {
-    next(err);
+    return next(err);
   }
 };
 
@@ -41,10 +38,9 @@ const deletePromptController: RequestHandler = async (req, res, next) => {
   try {
     const { id } = req.params;
     await promptService.deletePromptService(id);
-    ApiResponse.noContent(res);
-    return;
+    return ApiResponse.noContent(res);
   } catch (err: unknown) {
-    next(err);
+    return next(err);
   }
 };
 

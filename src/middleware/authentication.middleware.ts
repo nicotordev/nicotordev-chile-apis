@@ -21,8 +21,7 @@ export const authenticationMiddleware = async (
   });
 
   if (!dbApiKey) {
-    void ApiResponse.unauthorized(res, 'Invalid API key');
-    return;
+    return ApiResponse.unauthorized(res, 'Invalid API key');
   }
 
   next();

@@ -47,7 +47,7 @@ class App {
       legacyHeaders: false, // Disable the `X-RateLimit-*` headers
       message: 'Too many requests, please try again later.',
       handler: (req: Request, res: Response) => {
-        ApiResponse.tooManyRequests(res, 'Too many requests, please try again later.');
+        return ApiResponse.tooManyRequests(res, 'Too many requests, please try again later.');
       },
     });
 
@@ -59,7 +59,7 @@ class App {
       legacyHeaders: false,
       message: 'Too many requests, please try again later.',
       handler: (req: Request, res: Response) => {
-        ApiResponse.tooManyRequests(res, 'Too many requests, please try again later.');
+        return ApiResponse.tooManyRequests(res, 'Too many requests, please try again later.');
       },
     });
 
@@ -78,13 +78,13 @@ class App {
   private initializeErrorHandling(): void {
     this.app.use((err: unknown, req: Request, res: Response) => {
       logger.error(err);
-      ApiResponse.internalServerError(res, 'Internal server error');
+      return ApiResponse.internalServerError(res, 'Internal server error');
     });
   }
 
   private initialize404(): void {
     this.app.use((req: Request, res: Response) => {
-      ApiResponse.notFound(res, 'Resource not found');
+      return ApiResponse.notFound(res, 'Resource not found');
     });
   }
 
