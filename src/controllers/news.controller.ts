@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 
-import { scrapeNews } from '@/scraping/news.scraping';
+import { fetchFullHtmlContent } from '@/scraping/html.scraping';
 import ApiResponse from '@/utils/apiResponse.util';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -9,7 +9,7 @@ const newsStatusController: RequestHandler = (req, res, next) => {
 };
 
 const scrapeNewsController: RequestHandler = async (req, res, _next) => {
-  const html = await scrapeNews();
+  const html = await fetchFullHtmlContent(req.body.url as string);
   return ApiResponse.success(res, { html });
 };
 
