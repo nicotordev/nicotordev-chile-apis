@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 import apiKeyController from '@/controllers/apiKeys.controller';
 import { validateRequestZod } from '@/middleware/validateRequestZod.middleware';
-import { apiKeyIdParamSchema } from '@/schemas/apiKey.schema';
+import { apiKeyIdParamSchema } from '@/schemas/apiKeys.schema';
 
 const router = Router();
 
