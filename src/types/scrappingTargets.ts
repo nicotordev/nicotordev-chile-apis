@@ -8,4 +8,15 @@ interface UpdateScrappingTargetPayload {
   promptCategoryId?: string;
 }
 
-export type { CreateScrappingTargetPayload, UpdateScrappingTargetPayload };
+interface CreateManyScrappingTargetPayload {
+  items: {
+    url: string;
+    promptCategoryId: string;
+  }[];
+}
+
+export type {
+  CreateScrappingTargetPayload,
+  UpdateScrappingTargetPayload,
+  CreateManyScrappingTargetPayload,
+};

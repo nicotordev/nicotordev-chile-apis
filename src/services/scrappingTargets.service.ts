@@ -9,7 +9,11 @@ const createScrappingTarget = async (url: string) => {
     data: { url },
   });
 };
-
+const createManyScrappingTargets = async (items: { url: string; promptCategoryId: string }[]) => {
+  return await prisma.scrapingTarget.createMany({
+    data: items,
+  });
+};
 const deleteScrappingTarget = async (id: string) => {
   return await prisma.scrapingTarget.delete({
     where: { id },
@@ -39,4 +43,5 @@ export default {
   deleteScrappingTarget,
   updateScrappingTarget,
   getScrappingTarget,
+  createManyScrappingTargets,
 };

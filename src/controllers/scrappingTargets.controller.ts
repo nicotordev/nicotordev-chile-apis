@@ -4,6 +4,7 @@ import { RequestHandler } from 'express';
 import scrappingTargetsService from '../services/scrappingTargets.service';
 
 import {
+  CreateManyScrappingTargetPayload,
   CreateScrappingTargetPayload,
   UpdateScrappingTargetPayload,
 } from '@/types/scrappingTargets';
@@ -23,6 +24,16 @@ const createScrappingTarget: RequestHandler = async (req, res, next): Promise<vo
     const { url } = req.getBody<CreateScrappingTargetPayload>();
     const target = await scrappingTargetsService.createScrappingTarget(url);
     return ApiResponse.success(res, target);
+  } catch (error) {
+    return next(error);
+  }
+};
+
+const createManyScrappingTargets: RequestHandler = async (req, res, next): Promise<void> => {
+  try {
+    const { items } = req.getBody<CreateManyScrappingTargetPayload>();
+    const targets = await scrappingTargetsService.createManyScrappingTargets(items);
+    return ApiResponse.success(res, targets);
   } catch (error) {
     return next(error);
   }
@@ -65,4 +76,5 @@ export default {
   updateScrappingTarget,
   deleteScrappingTarget,
   getScrappingTarget,
+  createManyScrappingTargets,
 };
