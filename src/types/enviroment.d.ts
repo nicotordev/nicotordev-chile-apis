@@ -11,6 +11,8 @@ declare global {
       BRD_PROXY_HOST: string;
       BRD_PROXY_PORT: string;
       BRD_PROXY_AUTH: string;
+      BRD_PROXY_AUTH_USERNAME: string;
+      BRD_PROXY_AUTH_PASSWORD: string;
       BRD_CRT_CA_BASE64: string;
     }
   }
